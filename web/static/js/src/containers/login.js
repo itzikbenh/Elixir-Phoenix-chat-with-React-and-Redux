@@ -1,5 +1,4 @@
 import React from 'react';
-//import styles from '../styles/style';
 import Errors from '../components/errors';
 import { connect } from 'react-redux'
 import { setUser } from '../actions/index';
@@ -16,7 +15,6 @@ class Login extends React.Component {
       rememberMe: false,
     }
     this.handleLogin = this.handleLogin.bind(this)
-    this.handleFacebookLogin = this.handleFacebookLogin.bind(this)
   }
 
   handleLogin(e) {
