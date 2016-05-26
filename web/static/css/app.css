@@ -1,0 +1,61 @@
+body {
+  padding-top: 80px;
+}
+
+.login, .register, .update, .updatePassword {
+  margin: 0 auto;
+  float: none;
+  padding-top: 10px;
+}
+
+.registerFormErrors {
+  color: red;
+}
+
+.errors {
+  padding-bottom: 10px;
+}
+
+.jumbotron, .navbar {
+  background-color: #F67938;
+}
+
+nav ul li a, .navbar-brand{
+  color: white !important;
+}
+
+nav ul li a:hover, .active {
+  color: rgb(250, 196, 32) !important;
+}
+
+.jumboTitle {
+  color: white !important;
+}
+
+.center {
+  text-align: center;
+}
+
+.btn-primary, .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+  margin-top: 15px;
+  background-color: rgb(250, 87, 32) !important;
+  border: none !important;
+  outline: none !important;
+}
+
+.panel-body, .panel-default, .panel-heading, .panel-footer {
+  background-color: #F67938 !important;
+  color: white !important;
+}
+
+.messages {
+  list-style: none;
+  padding: 5px;
+}
+
+.fa-trash-o {
+  background: none;
+  border: none;
+  outline: none;
+  color: red;
+}
