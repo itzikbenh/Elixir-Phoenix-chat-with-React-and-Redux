@@ -48,6 +48,11 @@ nav ul li a:hover, .active {
   color: white !important;
 }
 
+.panel-title {
+  color: black;
+  padding-bottom: 15px;
+}
+
 .chatbox {
   height: 260px;
   overflow-y: auto;

@@ -115,7 +115,7 @@ const RoomsList = (props) => {
               {room.name}
             </Link>
             {/* If user is the creator of the room we will allow him to delete the room */}
-            {room.userId === props.userId && props.username === "elixir" ?
+            {room.userId === props.userId || props.username === "elixir" ?
               <button onClick={() => props.handleDelete(room.name, i) } className="fa fa-trash-o pull-right" aria-hidden="true">
               </button>
             : null}
