@@ -3,7 +3,7 @@ defmodule Chatrooms.Mixfile do
 
   def project do
     [app: :chatrooms,
-     version: "0.0.3",
+     version: "0.0.4",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
