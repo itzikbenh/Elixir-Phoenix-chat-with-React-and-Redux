@@ -48,6 +48,11 @@ nav ul li a:hover, .active {
   color: white !important;
 }
 
+.chatbox {
+  height: 260px;
+  overflow-y: auto;
+}
+
 .messages {
   list-style: none;
   padding: 5px;

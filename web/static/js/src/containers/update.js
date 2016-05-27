@@ -23,7 +23,7 @@ class Update extends React.Component {
     let accessToken = sessionStorage.getItem('TOKEN_STORAGE_KEY');
     $.ajax({
       type: 'GET',
-      url: "http://localhost:4000/api/users/"+encodeURIComponent(accessToken)+"/edit",
+      url: "http://107.170.1.207/api/users/"+encodeURIComponent(accessToken)+"/edit",
       success: function(data) {
         console.log("data is: ", data);
         this.setState({email: data.email});
@@ -40,7 +40,7 @@ class Update extends React.Component {
     this.setState({buttonText: "Updating..."})
     $.ajax({
       type: 'PATCH',
-      url: 'http://localhost:4000/api/users/'+encodeURIComponent(accessToken),
+      url: 'http://107.170.1.207/api/users/'+encodeURIComponent(accessToken),
       data: {
         user:{
           username: this.state.username,

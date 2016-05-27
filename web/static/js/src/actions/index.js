@@ -26,7 +26,7 @@ export function verifyUserToken(routeType) {
     }
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:4000/api/verifytoken/'+encodeURIComponent(accessToken),
+      url: 'http://107.170.1.207/api/verifytoken/'+encodeURIComponent(accessToken),
       success: function(data) {
         console.log("data is: ", data);
         sessionStorage.setItem('TOKEN_STORAGE_KEY', accessToken);
@@ -71,7 +71,7 @@ export function getRooms() {
   return function(dispatch) {
     $.ajax({
       type: 'GET',
-      url: "http://localhost:4000/api/rooms/",
+      url: "http://107.170.1.207/api/rooms/",
       success: function(data) {
         console.log("data is: ", data);
         let rooms = data.rooms.map(room => {

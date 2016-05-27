@@ -30,7 +30,7 @@ class Rooms extends React.Component {
     this.setState({buttonText: "Creating..."})
     $.ajax({
       type: 'POST',
-      url: 'http://localhost:4000/api/rooms/',
+      url: 'http://107.170.1.207/api/rooms/',
       data: {
         token: accessToken,
         room:{
@@ -66,7 +66,7 @@ class Rooms extends React.Component {
     let accessToken = sessionStorage.getItem('TOKEN_STORAGE_KEY');
     $.ajax({
       type: 'DELETE',
-      url: 'http://localhost:4000/api/rooms/'+encodeURIComponent(accessToken),
+      url: 'http://107.170.1.207/api/rooms/'+encodeURIComponent(accessToken),
       data: {
         room:{
           name: room,
@@ -98,7 +98,7 @@ class Rooms extends React.Component {
             </button>
           </form>
          </div>
-         <RoomsList rooms={this.props.rooms} handleDelete={this.handleDelete} userId={this.props.user.id}/>
+         <RoomsList rooms={this.props.rooms} handleDelete={this.handleDelete} username={this.props.user.username} userId={this.props.user.id}/>
        </div>
     );
   }
@@ -106,6 +106,7 @@ class Rooms extends React.Component {
 //Stateless component for rendering the rooms list. We could have created it as a separate file, but since
 //it's not shared in other views/components there is no need. It's up to you to decide.
 const RoomsList = (props) => {
+  console.log(props.username);
   return (
       <div className="col-md-3 col-sm-6 col-xs-6">
         {props.rooms.map((room, i) =>
@@ -114,7 +115,7 @@ const RoomsList = (props) => {
               {room.name}
             </Link>
             {/* If user is the creator of the room we will allow him to delete the room */}
-            {room.userId === props.userId ?
+            {room.userId === props.userId && props.username === "elixir" ?
               <button onClick={() => props.handleDelete(room.name, i) } className="fa fa-trash-o pull-right" aria-hidden="true">
               </button>
             : null}

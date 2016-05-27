@@ -16,7 +16,3 @@ defmodule Chatrooms.Api.SessionController do
     end
   end
 end
-
-
-
-app_dir = "/etc/nginx/phoenix_app/chatrooms/rel/chatrooms/bin/chatrooms" <> "/priv/repo/migrations"

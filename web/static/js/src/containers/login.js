@@ -22,7 +22,7 @@ class Login extends React.Component {
     this.setState({buttonText: "Logging in..."})
     $.ajax({
       type: 'POST',
-      url: "http://localhost:4000/api/sessions",
+      url: "http://107.170.1.207/api/sessions",
       data: {
         session:{
           email: this.state.email,

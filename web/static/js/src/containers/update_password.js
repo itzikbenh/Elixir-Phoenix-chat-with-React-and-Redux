@@ -25,7 +25,7 @@ export default class UpdatePassword extends React.Component {
     this.setState({buttonText: "Updating..."})
     $.ajax({
       type: 'PATCH',
-      url: 'http://localhost:4000/api/users/updatepassword/'+encodeURIComponent(accessToken),
+      url: 'http://107.170.1.207/api/users/updatepassword/'+encodeURIComponent(accessToken),
       data: {
         user:{
           currentPassword: this.state.currentPassword,

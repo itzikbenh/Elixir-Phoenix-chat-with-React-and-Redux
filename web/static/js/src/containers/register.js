@@ -86,7 +86,7 @@ class Register extends React.Component {
     this.setState({buttonText: "Registering..."})
     $.ajax({
       type: 'POST',
-      url: "http://localhost:4000/api/users",
+      url: "http://107.170.1.207/api/users",
       data: {
         user:{
           email: this.state.email,

@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import CircularProgress from 'material-ui/lib/circular-progress';
 import { connect } from 'react-redux'
 import { setUser, setMessagesList, addMessage, logOutUser, resetMessagesState } from '../actions/index';
@@ -33,6 +34,14 @@ class Room extends React.Component {
     this.verifyUserTokenAndConnectToChannel();
   }
 
+  componentDidUpdate() {
+    //when chatbox loads we will scroll the user to the bottom
+    if(this.refs.chatbox) {
+      let chatbox = this.refs.chatbox;
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  }
+
   routerWillLeave() {
     console.log("leaving");
     //When user leves page we will reset the messages state to its initial state.
@@ -60,7 +69,7 @@ class Room extends React.Component {
     }
     $.ajax({
       type: 'GET',
-      url: 'http://localhost:4000/api/verifytoken/'+encodeURIComponent(accessToken),
+      url: 'http://107.170.1.207/api/verifytoken/'+encodeURIComponent(accessToken),
       success: function(data) {
         //on success we just in case add the token to the sessionStorage because we will
         //rely on it in other pages.
@@ -81,7 +90,7 @@ class Room extends React.Component {
         //renderMessages function.
         this.state.channel.join()
           //I'm setting timeout on purpose to demonstrate how the loading spinner works
-          .receive("ok", resp => { setTimeout(() => (this.renderMessages(resp.messages)), 2000) })
+          .receive("ok", resp => { this.renderMessages(resp.messages) })
           .receive("error", resp => { console.log("Unable to join", resp) })
         //We create this event listener that will listen to "new_msg" broadcasting events.
         //so we can update the messages state.
@@ -138,7 +147,7 @@ class Room extends React.Component {
             <div className="panel panel-default">
               <div className="panel-heading">
                 <h3 className="panel-title">Welcome to {this.props.params.room.toUpperCase()} Room</h3>
-                <div className="panel-body">
+                <div className="panel-body chatbox" ref="chatbox">
                   <Messages messages={this.props.messages} />
                 </div>
               </div>
