@@ -80,7 +80,7 @@ class Room extends React.Component {
         //Now that the user is successfully verified we can try to connect to the channel.
         //First we create an instance of the Socket. We must pass the User's accessToken
         //because this is how the backend would verify him. After that we connect.
-        let socket = new Socket("ws://localhost:4000/socket", {params: {token: accessToken}})
+        let socket = new Socket("ws://107.170.1.207/socket", {params: {token: accessToken}})
         socket.connect()
         //After we connected we need to pick a channel. We pick it based on the routes room parameter.
         //We set the channel as a local state because we will need it available in other functions.
