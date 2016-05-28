@@ -22,7 +22,7 @@ defmodule Chatrooms.User do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
     |> cast(params, @required_fields, @optional_fields)
     |> validate_length(:username, min: 3, max: 20, message: "should be at least 3 characters")
@@ -42,7 +42,7 @@ defmodule Chatrooms.User do
     |> put_pass_hash()
   end
 
-  def update_password_changeset(model, params \\ :empty) do
+  def update_password_changeset(model, params \\ %{}) do
     model
     |> cast(params, ~w(password), [])
     |> validate_length(:password, min: 6, max: 100, message: "should be at least 6 characters")
