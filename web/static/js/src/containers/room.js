@@ -5,7 +5,9 @@ import { connect } from 'react-redux'
 import { setUser, setMessagesList, addMessage, logOutUser, resetMessagesState } from '../actions/index';
 import { hashHistory } from 'react-router';
 //This file was copied from the Phoenix project.
-import { Socket } from "phoenix";
+import { Socket, Presence } from "phoenix";
+
+let presences = {};
 
 //Room component. Here we verify the user and on success we connect to the channel
 //based on the URL param.
@@ -14,7 +16,8 @@ class Room extends React.Component {
     super();
     this.state = {
       channel: null,
-      message: ""
+      message: "",
+      list: [],
     }
     //We bind the "this" context to the component "this" context to make sure state is available in these functions
     this.handleMessageInput = this.handleMessageInput.bind(this)
@@ -100,6 +103,18 @@ class Room extends React.Component {
           let message = <div><b> {payload.user.username}:</b> {payload.body} </div>;
           this.props.actions.addMessage(message)
         });
+
+        this.state.channel.on("presence_state", state => {
+          //console.log(state)
+          Presence.syncState(presences, state)
+          this.renderActive(presences)
+        });
+
+        this.state.channel.on("presence_diff", diff => {
+          //console.log(diff)
+          Presence.syncDiff(presences, diff)
+          this.renderActive(presences)
+        });
       }.bind(this),
       error: function(error) {
         console.log(error);
@@ -107,6 +122,29 @@ class Room extends React.Component {
         hashHistory.push('/login');
       }.bind(this),
     });
+  }
+  listBy(id, {metas: [first, ...rest]}) {
+    //console.log("username is, ", first.username)
+    first.count = rest.length + 1;
+    return first;
+  }
+  renderActive(presences) {
+    console.log("jdb, ", Presence.list(presences, this.listBy))
+    let onlineUsersArray = []
+    let onlineUsers = Presence.list(presences, this.listBy)
+      .map(user => onlineUsersArray.push(`${user.username} ${user.count} -> connections number per user`))
+
+      // for(var key in onlineUsers) {
+      //   onlineUsersArray.push(`${user.username} ${user.count}`);
+      // }
+
+    this.setState({list: onlineUsersArray})
+
+    // console.log("usersss ", userList);
+    // let usersArray = [];
+    // usersArray.push(userList)
+    // this.setState({list: usersArray})
+    // console.log("state is ",this.state.list)
   }
   //Here we render any existent messages that we got from the backend on successful join to a channel.
   renderMessages(messages) {
@@ -144,6 +182,7 @@ class Room extends React.Component {
     } else {
         return (
           <div className="col-md-6 col-md-offset-3">
+            <OnlineUsers users={this.state.list} />
             <div className="panel panel-default">
               <div className="panel-heading">
                 <h3 className="panel-title">Welcome to {this.props.params.room.toUpperCase()} Room</h3>
@@ -176,6 +215,14 @@ const Messages = (props) => {
   return (
     <div>
       {props.messages.map((message, i) => <li className="messages" key={i}> {message} </li>)}
+    </div>
+  );
+}
+
+const OnlineUsers = (props) => {
+  return (
+    <div>
+      {props.users.map((user, i) => <li className="users" key={i}> {user} </li>)}
     </div>
   );
 }

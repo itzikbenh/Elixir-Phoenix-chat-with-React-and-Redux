@@ -8,7 +8,6 @@ use Mix.Config
 # Configures the endpoint
 config :chatrooms, Chatrooms.Endpoint,
   url: [host: "localhost"],
-  root: Path.dirname(__DIR__),
   secret_key_base: "QYENbl5F2/xjf3rLhZyK+wYhOQNGmNRdoHkcuzhfMMNrBm49WrNGnikWsfhgyFd1",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Chatrooms.PubSub,

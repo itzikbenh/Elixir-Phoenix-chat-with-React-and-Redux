@@ -1,5 +1,6 @@
 defmodule Chatrooms.RoomChannel do
   use Chatrooms.Web, :channel
+  alias Chatrooms.Presence
   alias Chatrooms.Api.MessageView
 
   def join("rooms:" <> room_name, _params, socket) do
@@ -14,7 +15,19 @@ defmodule Chatrooms.RoomChannel do
     )
     #
     resp = %{messages: Phoenix.View.render_many(messages, MessageView, "message.json")}
+    send self(), :after_join
     {:ok, resp, assign(socket, :room_id, room.id)} #here we assign the room ID to the socket assign so we can use it later
+  end
+
+  def handle_info(:after_join, socket) do
+    user = Chatrooms.Repo.get(Chatrooms.User, socket.assigns.user_id)
+    Presence.track(socket, to_string(socket.assigns.user_id), %{
+      device: "browser",
+      online_at: inspect(:os.timestamp()),
+      username: user.username
+    })
+    push socket, "presence_state", Presence.list(socket)
+    {:noreply, socket}
   end
 
   def handle_in("new_msg", params, socket) do

@@ -11,6 +11,7 @@ defmodule Chatrooms do
       supervisor(Chatrooms.Endpoint, []),
       # Start the Ecto repository
       supervisor(Chatrooms.Repo, []),
+      supervisor(Chatrooms.Presence, []),
       # Here you could define other workers and supervisors as children
       # worker(Chatrooms.Worker, [arg1, arg2, arg3]),
     ]
